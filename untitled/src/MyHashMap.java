@@ -49,18 +49,21 @@ public class MyHashMap<K, V> {
         // TODO Step 4: no existing entry found -- add a new Entry to the
         //   FRONT of the list (O(1) -- no traversal needed), increment size, return null
         int index = hash(key);
+
         if (table[index] == null){
-            table[index] = new LinkedList<>();
+            table[index] = new LinkedList<Entry<K, V>>();
         }
+
         for (Entry<K,V> entry : table[index]){
-            if (entry.key.equals(table[index])){ // only loops through the list looking for an
+            if (entry.key.equals(key)){ // only loops through the list looking for an
                 V og = entry.value;
                 entry.value = value;
                 return og;
             }
         }
+
         table[index].addFirst(new Entry<>(key, value));
-        this.size++;
+        size++;
         return null;
     }
 
@@ -118,21 +121,23 @@ public class MyHashMap<K, V> {
 
         // TODO Step 4: key was not found -- return null
         int index = hash(key);
-        if (table[index] == null){
+        if (table[index] == null) {
             return null;
         }
 
-        Iterator<Entry<K,V>> it = table[index].iterator();
-        while (it.hasNext()){
+        Iterator<Entry<K, V>> it = table[index].iterator();
+
+        while (it.hasNext()) {
             Entry<K, V> entry = it.next();
-            if (entry.key.equals(key)){
-                V oldvalue = entry.value;
+            if (entry.key.equals(key)) {
+                V value = entry.value;
+                size--;
                 it.remove();
-                this.size--;
-                return oldvalue;
+                return value;
             }
         }
-        return null; // replace this
+        //size--;
+        return null;
     }
 
     // ── size ──────────────────────────────────────────────────────────────
@@ -167,7 +172,7 @@ public class MyHashMap<K, V> {
         // put -- duplicate key (update)
         map.put("cat", 99);
         System.out.println("get(cat) after update: " + map.get("cat")); // 99
-        System.out.println("Size after update: " + map.size());         // 5
+        System.out.println("Size after update: " + map.size());         // 5 source of error
 
         // containsKey
         System.out.println("containsKey(dog): " + map.containsKey("dog")); // true
