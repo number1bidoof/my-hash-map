@@ -52,7 +52,7 @@ public class MyHashMap<K, V> {
             table[index] = new LinkedList<>();
         }
         for (Entry<K,V> entry : table[index]){
-            if (entry.key.equals(table[index])){
+            if (entry.key.equals(table[index])){ // only loops through the list looking for an
                 V og = entry.value;
                 entry.value = value;
                 return og;
@@ -73,8 +73,15 @@ public class MyHashMap<K, V> {
         //   -- if an entry with a matching key is found, return its value
 
         // TODO Step 4: key was not in the list -- return null
-
-        return null; // replace this
+        int index = hash(key);
+        if (table[index] == null)
+            return null;
+        for (Entry<K,V> entry : table[index]){
+            if (entry.key.equals(key)){
+                return entry.value;
+            };
+        }
+        return null;
     }
 
     // ── containsKey ───────────────────────────────────────────────────────
@@ -83,8 +90,15 @@ public class MyHashMap<K, V> {
         // Hint: get(key) returns null when the key is not present --
         //   but what if a key IS present and its value is null?
         //   Walk the list directly to be safe.
-
-        return false; // replace this
+        int index = hash(key);
+        if (table[index] == null)
+            return false;
+        for (Entry<K,V> entry : table[index]){
+            if (entry.key.equals(key)){
+                return true;
+            }
+        }
+        return false;
     }
 
     // ── remove ────────────────────────────────────────────────────────────
