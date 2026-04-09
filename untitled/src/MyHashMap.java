@@ -1,5 +1,6 @@
 import java.lang.foreign.ValueLayout;
 import java.lang.module.FindException;
+import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -116,7 +117,14 @@ public class MyHashMap<K, V> {
         //      then it.remove() when you find the match.
 
         // TODO Step 4: key was not found -- return null
-
+        int index = hash(key);
+        if (table[index] == null){
+            return null;
+        }
+        for (Entry<K,V> entry : table[index]){
+            Iterator<Entry<K,V>> it = table[index].iterator();
+            // something lollll
+        }
         return null; // replace this
     }
 
