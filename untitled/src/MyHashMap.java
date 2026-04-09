@@ -60,7 +60,7 @@ public class MyHashMap<K, V> {
             }
         }
         table[index].addFirst(new Entry<>(key, value));
-        size++;
+        this.size++;
         return null;
     }
 
@@ -121,9 +121,16 @@ public class MyHashMap<K, V> {
         if (table[index] == null){
             return null;
         }
-        for (Entry<K,V> entry : table[index]){
-            Iterator<Entry<K,V>> it = table[index].iterator();
-            // something lollll
+
+        Iterator<Entry<K,V>> it = table[index].iterator();
+        while (it.hasNext()){
+            Entry<K, V> entry = it.next();
+            if (entry.key.equals(key)){
+                V oldvalue = entry.value;
+                it.remove();
+                this.size--;
+                return oldvalue;
+            }
         }
         return null; // replace this
     }
